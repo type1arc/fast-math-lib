@@ -53,7 +53,7 @@ namespace arc
 		}
 
 		void logv() { std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl; }
-		_type mag() { return x + y + z; }
+		_type mag() { return sqrt(x * x + y * y + z * z); }
 		std::tuple<_type, _type, _type> get() { return vec_t; }
 	};
 

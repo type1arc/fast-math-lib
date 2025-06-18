@@ -31,11 +31,11 @@ constexpr float pi = std::numbers::pi_v<float>;
 
 namespace arc
 {	
-	// data classures
+	// data structures
 	template<typename _type>
 	concept numeric = std::is_arithmetic_v<_type>;
 	template<numeric _type>
-	class vec3 // For vectors in 3D space
+	struct vec3 // For vectors in 3D space
 	{
 	private:
 		std::tuple<_type, _type, _type> vec_t;
@@ -58,7 +58,7 @@ namespace arc
 	};
 
 	template<numeric _type>
-	class vec2 // For vectors in 2D space
+	struct vec2 // For vectors in 2D space
 	{
 	private:
 		std::tuple<float, float> vec_t;
@@ -79,7 +79,7 @@ namespace arc
 		std::tuple<float, float> get() { return vec_t; }
 	};
 
-	class mat3
+	struct mat3
 	{
 		int const rows = 3;
 		int const columns = 3;
@@ -265,7 +265,7 @@ namespace arc
 		{
 			return std::chrono::duration_cast<std::chrono::milliseconds> (_final - _init);
 		}
-	}
+	
 
 	// vortex - utilities
 	
@@ -274,7 +274,7 @@ namespace arc
 		namespace opt
 		{
 			template<numeric _type>
-			class shift
+			struct shift
 			{
 			public:
 				_type x, y, z;
@@ -292,7 +292,7 @@ namespace arc
 			};
 
 			template<numeric _type>
-			class expo // UPDATED...
+			struct expo // UPDATED...
 			{
 				public:
 					_type x;
@@ -331,7 +331,7 @@ namespace arc
 		namespace complex_plane
 		{
 			template<numeric _type>
-			class complex
+			struct complex
 			{
 				public:
 					std::tuple<_type, _type> value;

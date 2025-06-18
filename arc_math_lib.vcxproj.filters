@@ -23,5 +23,8 @@
     <ClInclude Include="arc.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="arc_class.hpp">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
