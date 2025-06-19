@@ -27,6 +27,8 @@ typedef uint16_t u16;
 typedef uint32_t u32;
 typedef uint64_t u64;
 
+typedef float flt;
+
 constexpr float pi = std::numbers::pi_v<float>;
 
 namespace arc
@@ -79,58 +81,36 @@ namespace arc
 		std::tuple<_type, _type> get() { return vec_t; }
 	};
 
+	
+
+template <numeric _type>
 	class mat3
 	{
-		int const rows = 3;
-		int const columns = 3;
-
 	public:
-		float mat[3][3];
-
-
-		mat3(float diag)
+		std::vector<std::vector<_type>> mat;
+		mat3(_type diag)
 		{
-			int i = 0;
-			int row = 0;
-
-
-			while (row < 3)
+			mat =
 			{
-				i++;
-				if (i > 2)
+				{diag, 0, 0},
+				{0, diag, 0},
+				{0, 0, diag}
+			}; 
+		}
+		void log_m()
+		{
+			for (int x = 0; x < mat.size(); x++)
+			{
+				for (int y = 0; y < mat[x].size(); y++)
 				{
-					i = 0;
-					row++;
+					std::cout << mat[x][y] << " ";
 				}
-
-				mat[row][i] = 1;
-
-			}
-		}
-	};
-
-	void logm(float matrix[3][3]) // for logging or printing the matrix into the terminal
-	{
-		int i = 0;
-		int row = 0;
-
-		std::cout << "[mat3]" << std::endl;
-		while (row < 3)
-		{
-			if (i > 2)
-			{
 				std::cout << std::endl;
-				i = 0;
-				row++;
-
-				if (row > 2)
-					break;
 			}
-
-			i++;
-			std::cout << matrix[row][i] << " ";
 		}
-	}
+	};	
+
+	
 
 	// operators
 	namespace operators

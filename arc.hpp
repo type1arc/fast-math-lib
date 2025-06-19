@@ -30,7 +30,7 @@ typedef float flt;
 constexpr float pi = std::numbers::pi_v<float>;
 
 namespace arc
-{	
+{
 	// data structures
 	template<typename _type>
 	concept numeric = std::is_arithmetic_v<_type>;
@@ -79,58 +79,32 @@ namespace arc
 		std::tuple<float, float> get() { return vec_t; }
 	};
 
-	struct mat3
+	template <numeric _type>
+	struct  mat3
 	{
-		int const rows = 3;
-		int const columns = 3;
-
-		public:
-			float mat[3][3];
-
-
-			mat3(float diag)
-			{
-				int i = 0;
-				int row = 0;
-
-
-				while (row < 3)
-				{
-					i++;
-					if (i > 2)
-					{
-						i = 0;
-						row++;
-					}
-
-					mat[row][i] = 1;
-
-				}
-			}
-	};
-
-	void logm(float matrix[3][3]) // for logging or printing the matrix into the terminal
-	{
-		int i = 0;
-		int row = 0;
-
-		std::cout << "[mat3]" << std::endl;
-		while (row < 3)
+	public:
+		std::vector<std::vector<_type>> mat;
+		mat3(_type diag)
 		{
-			if (i > 2)
+			mat =
 			{
-				std::cout << std::endl;
-				i = 0;
-				row++;
-
-				if (row > 2)
-					break;
-			}
-
-			i++;
-			std::cout << matrix[row][i] << " ";
+				{diag, 0, 0},
+				{0, diag, 0},
+				{0, 0, diag}
+			}; 
 		}
-	}
+		void log_m()
+		{
+			for (int x = 0; x < mat.size(); x++)
+			{
+				for (int y = 0; y < mat[x].size(); y++)
+				{
+					std::cout << mat[x][y] << " ";
+				}
+				std::cout << std::endl;
+			}
+		}
+	};	
 
 	// operators
 	namespace operators
@@ -140,11 +114,11 @@ namespace arc
 		vec3<_type> Add(vec3<_type> v1, vec3<_type> v2)
 		{
 			vec3<_type> _out = vec3<_type>
-			(
-				v1.x + v2.x,
-				v1.y + v2.y,
-				v1.z + v2.z
-			);
+				(
+					v1.x + v2.x,
+					v1.y + v2.y,
+					v1.z + v2.z
+				);
 
 			return _out;
 		}
@@ -197,10 +171,10 @@ namespace arc
 		vec2<_type> Add(vec2<_type> v1, vec2<_type> v2)
 		{
 			vec2<_type> _out = vec2<_type>
-			(
-				v1.x + v2.x,
-				v1.y + v2.y
-			);
+				(
+					v1.x + v2.x,
+					v1.y + v2.y
+				);
 
 			return _out;
 		}
@@ -244,7 +218,7 @@ namespace arc
 			return _out;
 		}
 	}
-	
+
 	// time
 	namespace time
 	{
@@ -253,38 +227,38 @@ namespace arc
 			return std::chrono::time_point_cast<std::chrono::milliseconds>(std::chrono::system_clock::now());
 		}
 
-		std::chrono::system_clock::time_point elapsed_init() { return std::chrono::system_clock::now();	} // initial time value
-		std::chrono::system_clock::time_point elapsed_final() {	return std::chrono::system_clock::now(); } // final time value
+		std::chrono::system_clock::time_point elapsed_init() { return std::chrono::system_clock::now(); } // initial time value
+		std::chrono::system_clock::time_point elapsed_final() { return std::chrono::system_clock::now(); } // final time value
 
-		void delay()
+		void delay(i64 duration)
 		{
-			std::this_thread::sleep_for(std::chrono::milliseconds(100)); // delay by 100ms
+			std::this_thread::sleep_for(std::chrono::milliseconds(duration)); // delay by 100ms
 		}
 
 		std::chrono::system_clock::duration elapsed_time(std::chrono::system_clock::time_point _init, std::chrono::system_clock::time_point _final) // calculate elapsed time
 		{
 			return std::chrono::duration_cast<std::chrono::milliseconds> (_final - _init);
 		}
-	
 
-	// vortex - utilities
-	
+	}
+		// vortex - utilities
+
 	namespace vortex // TO DO: ADD MORE
 	{
 		namespace opt
 		{
 			template<numeric _type>
-			struct shift
+			class shift
 			{
 			public:
 				_type x, y, z;
 				shift(_type x, _type y, _type z) : x(x), y(y), z(z) {}
-			
+
 				shift operator>>(const shift& ott)
 				{
 					return shift(x = ott.y, y = ott.z, z = ott.x);
 				}
-			
+
 				void log()
 				{
 					std::cout << "(" << x << ", " << y << ", " << ")";
@@ -294,14 +268,14 @@ namespace arc
 			template<numeric _type>
 			struct expo // UPDATED...
 			{
-				public:
-					_type x;
-					expo(_type x) : x(x) {}
-			
-					_type operator^(_type exponent)
-					{
-						return std::pow(x, exponent);
-					}
+			public:
+				_type x;
+				expo(_type x) : x(x) {}
+
+				_type operator^(_type exponent)
+				{
+					return std::pow(x, exponent);
+				}
 			};
 		}
 
@@ -324,7 +298,7 @@ namespace arc
 			return guess;
 		}
 
-		#define iota sqroot(-1)
+#define iota sqroot(-1)
 
 
 		// complex numbers - lets see how it goes
@@ -333,30 +307,30 @@ namespace arc
 			template<numeric _type>
 			struct complex
 			{
-				public:
-					std::tuple<_type, _type> value;
-					_type re_comp, im_comp;
-					complex(_type re_comp, _type im_comp) : re_comp(re_comp), im_comp(im_comp)
-					{
-						value = std::make_tuple(re_comp, im_comp);
-					}
+			public:
+				std::tuple<_type, _type> value;
+				_type re_comp, im_comp;
+				complex(_type re_comp, _type im_comp) : re_comp(re_comp), im_comp(im_comp)
+				{
+					value = std::make_tuple(re_comp, im_comp);
+				}
 
-					_type iabs(std::tuple<_type, _type>& value)
-					{
-						return sqroot(re_comp * re_comp + im_comp * im_comp);
-					}
+				_type iabs(std::tuple<_type, _type>& value)
+				{
+					return sqroot(re_comp * re_comp + im_comp * im_comp);
+				}
 
-					void log()
-					{
-						std::string sign;
+				void log()
+				{
+					std::string sign;
 
-						if (std::get<1>(value) > 0)
-							sign = "+";
-						if (std::get<1>(value) < 0)
-							sign = "-";
+					if (std::get<1>(value) > 0)
+						sign = "+";
+					if (std::get<1>(value) < 0)
+						sign = "-";
 
-						std::cout << std::get<0>(value) << sign << std::get<1>(value) << "i" << std::endl;
-					}
+					std::cout << std::get<0>(value) << sign << std::get<1>(value) << "i" << std::endl;
+				}
 			};
 		}
 	}
@@ -373,7 +347,7 @@ namespace arc
 			if (N <= 1) return;
 
 			CArr even(N / 2), odd(N / 2);
-			
+
 			for (size_t i = 0; i < N / 2; ++i)
 			{
 				even[i] = x[i * 2];
