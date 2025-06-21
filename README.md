@@ -30,7 +30,7 @@ Planned enhancements include:
 ## Installation
 To integrate Arc Math Lib into your C++ project, clone the repository:
 ```sh
-git clone https://github.com/your-username/arc-math-lib.git
+git clone https://github.com/type1arc/arc-math-lib.git
 
 ```
 
