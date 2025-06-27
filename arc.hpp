@@ -53,7 +53,7 @@ namespace arc
 		}
 
 		void logv() { std::cout << "(" << x << ", " << y << ", " << z << ")" << std::endl; }
-		float mag() { return x + y + z; }
+		_type mag() { return x + y + z; }
 		std::tuple<_type, _type, _type> get() { return vec_t; }
 	};
 
@@ -61,12 +61,12 @@ namespace arc
 	struct vec2 // For vectors in 2D space
 	{
 	private:
-		std::tuple<float, float> vec_t;
+		std::tuple<_type, _type> vec_t;
 
 	public:
-		float x, y;
+		_type x, y;
 
-		vec2(float x, float y)
+		vec2(_type x, _type y)
 		{
 			this->x = x;
 			this->y = y;
@@ -75,8 +75,8 @@ namespace arc
 		}
 
 		void logv() { std::cout << "(" << x << ", " << y << ")" << std::endl; }
-		float mag() { return x + y; }
-		std::tuple<float, float> get() { return vec_t; }
+		_type mag() { return x + y; }
+		std::tuple<_type, _type> get() { return vec_t; }
 	};
 
 	template <numeric _type>
@@ -150,7 +150,7 @@ namespace arc
 		}
 
 		template<numeric _type>
-		float dot_product(vec3<_type> v1, vec3<_type> v2)
+		_type dot_product(vec3<_type> v1, vec3<_type> v2)
 		{
 			return v1.mag() * v2.mag() * cos(atan2(v1.mag(), v2.mag()));
 		}
@@ -203,7 +203,7 @@ namespace arc
 		}
 
 		template<numeric _type>
-		float dot_product(vec2<_type> v1, vec2<_type> v2)
+		 _type dot_product(vec2<_type> v1, vec2<_type> v2)
 		{
 			return v1.mag() * v2.mag() * cos(atan2(v1.mag(), v2.mag()));
 		}
@@ -248,7 +248,7 @@ namespace arc
 		namespace opt
 		{
 			template<numeric _type>
-			class shift
+			struct shift
 			{
 			public:
 				_type x, y, z;
@@ -279,29 +279,12 @@ namespace arc
 			};
 		}
 
-		template<numeric _type>
-		_type sqroot(_type _x) // SQR ROOT FUNCTION using Newton-Raphson Method
-		{
-			if (_x < 0.0f) {
-				errlog("complex-plane: arg < 0");
-				return EXIT_FAILURE;
-			}
 
-			_type guess = _x / 2.0f;
-			_type epsilon = 0.00000001f;
-
-			while (abs(guess * guess - 1) > epsilon)
-			{
-				guess = (guess + _x / guess) / 2.0f;
-			}
-
-			return guess;
-		}
-
-#define iota sqroot(-1)
+#define iota sqrt(-1)
 
 
 		// complex numbers - lets see how it goes
+		// [UPDATE] turned out pretty good i think
 		namespace complex_plane
 		{
 			template<numeric _type>
@@ -328,7 +311,6 @@ namespace arc
 						sign = "+";
 					if (std::get<1>(value) < 0)
 						sign = "-";
-
 					std::cout << std::get<0>(value) << sign << std::get<1>(value) << "i" << std::endl;
 				}
 			};
@@ -364,11 +346,15 @@ namespace arc
 
 			}
 		}
+	}
 
+	// utilities
+	namespace util
+	{
 		template<typename _type>
 		_type get_random(_type min, _type max)
 		{
-			static_assert(std::is_arithmetic<_type>::value, "arithmetic type not found.");
+			static_assert(std::is_arithmetic<_type>::value, "[ERROR]: INVALID TYPE: 'numeric type not found.'");
 
 			std::random_device id;
 			std::mt19937 generator(id());
@@ -382,6 +368,25 @@ namespace arc
 				std::uniform_real_distribution dist(min, max);
 				return dist(generator);
 			}
+		}
+		
+		template<numeric _type>
+		_type sqroot(_type _x) // SQR ROOT FUNCTION using Newton-Raphson Method
+		{
+			if (_x < 0.0f) {
+				errlog("complex-plane: arg < 0");
+				return EXIT_FAILURE;
+			}
+
+			_type guess = _x / 2.0f;
+			_type epsilon = 0.00000001f;
+
+			while (abs(guess * guess - 1) > epsilon)
+			{
+				guess = (guess + _x / guess) / 2.0f;
+			}
+
+			return guess;
 		}
 	}
 }
