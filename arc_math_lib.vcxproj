@@ -134,8 +134,18 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arc_algorithm.hpp" />
+    <ClInclude Include="arc_algorithm_impl.hpp" />
     <ClInclude Include="arc.hpp" />
-    <ClInclude Include="arc_class.hpp" />
+    <ClInclude Include="arc_concepts.hpp" />
+    <ClInclude Include="arc_constants.hpp" />
+    <ClInclude Include="arc_complex.hpp" />
+    <ClInclude Include="arc_complex_impl.hpp" />
+    <ClInclude Include="arc_time.hpp" />
+    <ClInclude Include="arc_vector.hpp" />
+    <ClInclude Include="arc_vector_impl.hpp" />
+    <ClInclude Include="arc_vortex.hpp" />
+    <ClInclude Include="arc_vortex_impl.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
