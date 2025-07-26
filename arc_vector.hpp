@@ -16,7 +16,7 @@ namespace arc
 	public:
 		_type x, y, z;
 
-		vec3<_type>(_type x, _type y, _type z);
+		vec3(_type x, _type y, _type z);
 
 		void logv();
 		_type mag();

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "arc_constants.hpp"
+#include "arc_algorithm.hpp"
 
 namespace algorithm
 {

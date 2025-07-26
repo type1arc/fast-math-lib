@@ -1,5 +1,7 @@
 #pragma once
 
+#include "arc_vortex.hpp"
+
 namespace vortex
 {
 	namespace opt

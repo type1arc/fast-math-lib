@@ -1,7 +1,6 @@
 #pragma once
 
 #include <tuple>
-#include <iostream>
 #include "arc_concepts.hpp"
 
 #define iota sqrt(-1)
@@ -23,4 +22,3 @@ namespace complex_plane
 	};
 }
 
-#include "arc_complex_impl.hpp"

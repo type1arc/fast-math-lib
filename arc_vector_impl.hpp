@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "arc_vector.hpp"
 
 namespace arc
 {
@@ -111,18 +112,14 @@ namespace arc
 	template<numeric _type>
 	_type dot_product(vec3<_type> v1, vec3<_type> v2)
 	{
-		return v1.mag() * v2.mag() * cos(atan2(v1.mag(), v2.mag()));
+		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z; 
 	}
 
 	template<numeric _type>
 	vec3<_type> cross_product(vec3<_type> v1, vec3<_type> v2)
 	{
-		vec3<_type> _out = vec3<_type>(0.0f, 0.0f, 0.0f);
-		_out.x = v1.x * v2.x * sin(atan2(v1.mag(), v2.mag()));
-		_out.y = v1.y * v2.y * sin(atan2(v1.mag(), v2.mag()));
-		_out.z = v1.z * v2.z * sin(atan2(v1.mag(), v2.mag()));
-
-		return _out;
+    // a×b⃗=i^(a2b3−a3b2)−j^(a1b3−a3b1)+k^(a1b2−a2b1
+    return vec3<_type>(v1.y * v2.z - v1.z * v2.y, v1.x * v2.z - v1.z - v2.x, v1.x * v2.y - v1.y * v2.x);
 	}
 
 	// vectors in 2D space

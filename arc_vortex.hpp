@@ -1,7 +1,7 @@
 #pragma once
 
 #include "arc_concepts.hpp"
-#include <iostream>
+#include <math.h>
 
 namespace vortex // TO DO: ADD MORE
 {
@@ -31,4 +31,3 @@ namespace vortex // TO DO: ADD MORE
 	}
 }
 
-#include "arc_vortex_impl.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "arc_complex.hpp"
 #include <complex>
+#include <vector>
 
 // algorithms
 namespace algorithm
@@ -12,4 +12,3 @@ namespace algorithm
   void fft(c_arr& x);
 }
 
-#include "arc_algorithm_impl.hpp"
